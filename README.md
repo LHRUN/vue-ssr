@@ -5,13 +5,18 @@
 + dev
 ```
 pnpm install
-pnpm run dev
+pnpm dev
 ```
 + prod
 ```
 pnpm install
-pnpm run build
-pnpm run serve
+pnpm build
+pnpm serve
+```
++ test
+```
+pnpm install
+pnpm test
 ```
 
 ### File list
@@ -24,10 +29,15 @@ pnpm run serve
 │  ├─ types
 │  ├─ App.vue
 │  ├─ entry-client.ts // mount dom && replace data
-│  ├─ entry-server.js // change html strings and static resources
+│  ├─ entry-server.js // replace html strings and static resources
 │  └─ main.ts // create app
 │
-├─ server.js // server startup file
+├─ __tests__
+│  ├─ test-server // test server startup file
+│  └─ vuessr.spec.ts // vue ssr test
+│
+├─ server.js // server file
+├─ start-server.js // server startup file
 ├─ vite.config.ts
 // ...
 ```
