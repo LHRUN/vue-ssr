@@ -12,7 +12,7 @@ const createServer = async (isTest = false) => {
   const isProd = process.env.NODE_ENV === 'production'
   const app = express()
 
-  // 配置vite服务
+  // configure vite service
   let vite
   if (isProd) {
     app.use(require('compression')())
@@ -31,7 +31,7 @@ const createServer = async (isTest = false) => {
     app.use(vite.middlewares)
   }
 
-  // 生产环境下的静态资源映射
+  // static resource mapping in prod env
   const manifest = isProd
     ? fs.readFileSync(resolve('./dist/client/ssr-manifest.json'), 'utf-8')
     : {}
@@ -39,7 +39,7 @@ const createServer = async (isTest = false) => {
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
     try {
-      // 获取不同环境下的html模版和渲染函数
+      // get html template and rendering functions for different env
       let template, render
       if (isProd) {
         template = fs.readFileSync(resolve('./dist/client/index.html'), 'utf-8')
@@ -51,7 +51,7 @@ const createServer = async (isTest = false) => {
       }
       const [appHtml, preloadLinks, piniaState] = await render(url, manifest)
 
-      // 替换处理过后的资源
+      // replace processed resources
       const html = template
         .replace(`<!--preload-links-->`, preloadLinks)
         .replace(`<!--ssr-outlet-->`, appHtml)
